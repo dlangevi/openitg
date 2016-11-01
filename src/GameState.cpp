@@ -341,6 +341,7 @@ void GameState::BeginGame()
 
 void GameState::PlayersFinalized()
 {
+  LOG->Trace("GameState::PlayersFinalized()");
 	if( MEMCARDMAN->GetCardsLocked() )
 		return;
 
@@ -376,8 +377,10 @@ void GameState::PlayersFinalized()
 
 	FOREACH_HumanPlayer( pn )
 	{
-		if( !PROFILEMAN->IsPersistentProfile(pn) )
+		if( !PROFILEMAN->IsPersistentProfile(pn) ) {
+      LOG->Trace("skipping stuff for player %d", pn +1);
 			continue;	// skip
+    }
 
 		Profile* pProfile = PROFILEMAN->GetProfile(pn);
 

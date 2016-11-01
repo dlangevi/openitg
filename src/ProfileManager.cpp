@@ -153,7 +153,7 @@ bool ProfileManager::LoadProfileFromMemoryCard( PlayerNumber pn )
 
 	// mount slot
 	if( MEMCARDMAN->GetCardState(pn) != MEMORY_CARD_STATE_READY ) {
-		LOG->ProfileStop(key, "Loading Profile Ended");
+		LOG->ProfileStop(key, "Not State Ready! Loading Profile Ended");
 		return false;
 	}
 

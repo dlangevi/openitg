@@ -202,9 +202,10 @@ void ThreadedMemoryCardWorker::DoHeartbeat()
 	bool bMount = (m_MountThreadState == detect_and_mount);
 
 	vector<UsbStorageDevice> aStorageDevices;
-//	LOG->Trace("update");
-	if( !m_pDriver->DoOneUpdate( bMount, aStorageDevices ) )
+	if( !m_pDriver->DoOneUpdate( bMount, aStorageDevices ) ) {
 		return;
+  }
+  LOG->Trace("Do one update returned true");
 
 	UsbStorageDevicesMutex.Lock();
 	m_aUsbStorageDevices = aStorageDevices;
@@ -365,10 +366,16 @@ void MemoryCardManager::UpdateAssignments()
 				
 		FOREACH( UsbStorageDevice, vUnassignedDevices, d )
 		{
+      LOG->Trace( "Checking sDevice: %s, iBus: %d, iLevel: %d, iPort: %d, id: %04X:%04X, Vendor: '%s', Product: '%s', sSerial: \"%s\", sOsMountDir: %s, bUsePmount: %d",
+          d->sDevice.c_str(), d->iBus, d->iLevel, d->iPort, d->idVendor, d->idProduct, d->sVendor.c_str(),
+          d->sProduct.c_str(), d->sSerial.c_str(), d->sOsMountDir.c_str(), d->bUsePmount );
+      LOG->Trace( "Player %d mountdir %s:", p+1, m_sMemoryCardOsMountPoint[p].Get().c_str());
+
+      // disable this ??? what could go wrong
 			// search for card dir match
-			if( !m_sMemoryCardOsMountPoint[p].Get().empty() &&
-				d->sOsMountDir.CompareNoCase(m_sMemoryCardOsMountPoint[p].Get()) )
-				continue;      // not a match
+			//if( !m_sMemoryCardOsMountPoint[p].Get().empty() &&
+			//	d->sOsMountDir.CompareNoCase(m_sMemoryCardOsMountPoint[p].Get()) )
+			//	continue;      // not a match
 			
 			// search for USB bus match
 			if( m_iMemoryCardUsbBus[p] != -1 &&
@@ -387,6 +394,9 @@ void MemoryCardManager::UpdateAssignments()
 				continue;       // pmount disabled
 
 			LOG->Trace( "Player %i: matched %s", p+1, d->sDevice.c_str() );
+      // We matched, so because Im dum lets try makeing sure the mount is copied
+      // d->sOsMountDir = m_sMemoryCardOsMountPoint[p].Get();
+      // d->sPmountLabel = "/usbprofile/player1";
 
 			assigned_device = *d;    // save a copy
 			vUnassignedDevices.erase( d );       // remove the device so we don't match it for another player
