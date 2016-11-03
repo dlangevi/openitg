@@ -16,14 +16,14 @@ I'm Not currently bothering with packaging assets, this is just to generate the
 openitg binary.
 
 To configure (for fresh build)
-$ ./autogen.sh
-$ ./configure --with-x --with-gnu-ld
-$ make clean
+    ./autogen.sh
+    ./configure --with-x --with-gnu-ld
+    make clean
 
 To build just
-$ make
-$ strip --strip-unneeded src/openitg
-$ cp src/openitg $OPENITG/openitg
+    make
+    strip --strip-unneeded src/openitg
+    cp src/openitg $OPENITG/openitg
 
 # Details on my personal setup
 
