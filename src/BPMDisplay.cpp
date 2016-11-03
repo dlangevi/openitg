@@ -1,6 +1,8 @@
 #include "global.h"
 #include "BPMDisplay.h"
 #include "GameState.h"
+#include "Screen.h"
+#include "ScreenManager.h"
 #include "Course.h"
 #include "Style.h"
 #include "ActorUtil.h"
@@ -108,8 +110,13 @@ void BPMDisplay::SetBPMRange( const DisplayBpms &bpms )
 		}
 		if( MinBPM == MaxBPM )
 		{
+      bool inGameplay = gameplay == SCREENMAN->GetTopScreen()->GetScreenType();
 			if( MinBPM == -1 )
 				m_textBPM.SetText( "..." ); // random
+      else if (inGameplay /* rate mod is active */) {
+        const float rateMod = GAMESTATE->m_SongOptions.m_fMusicRate;
+        m_textBPM.SetText( ssprintf("%03.0f", MinBPM * rateMod) );
+      }
 			else
 				m_textBPM.SetText( ssprintf("%i", MinBPM) );
 		}
