@@ -270,11 +270,7 @@ static void child_process()
 	time_t seconds;
 	seconds = time( NULL );
 
-#ifdef ITG_ARCADE	
-	sCrashInfoPath = ssprintf( "/stats/crashinfo-%ld.txt" , seconds ); // Timestamped!
-#else
 	sCrashInfoPath = ssprintf( "Data/crashinfo-%ld.txt" , seconds );
-#endif
 
 	FILE *CrashDump = fopen( sCrashInfoPath, "w+" );
 	if(CrashDump == NULL)
@@ -376,15 +372,6 @@ static void child_process()
 
 #endif
 
-#ifdef ITG_ARCADE
-	struct stat ncr;
-	if ( stat("/tmp/no-crash-reboot", &ncr) != 0 )
-	{
-		sync();
-		sleep(5);
-		reboot(RB_AUTOBOOT);
-	}
-#endif
 }
 
 

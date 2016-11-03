@@ -20,13 +20,7 @@ namespace
 {
 	const CString GetPlatform()
 	{
-	#if defined(ITG_ARCADE)
-		return "AC";
-	#elif defined(XBOX)
-		return "CS";
-	#else
-		return "PC";
-	#endif
+    return "AC";
 	}
 }
 

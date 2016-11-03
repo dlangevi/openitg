@@ -168,18 +168,12 @@ bool ScreenArcadeStart::LoadHandler()
 	else if( iBoard == BOARD_PIUIO )
 		pDriver = new PIUIO;
 	else
-#ifdef ITG_ARCADE
-	{
-		m_sMessage = "The input/lights controller is not connected or is not receiving power.\n\nPlease consult the service manual.";
-		return false;
-	}
-#else
 	{
 		/* Return true if PC, even though it doesn't load. */
 		LOG->Warn( "ScreenArcadeStart: I/O board not found. Continuing anyway..." );
+		LOG->Trace( "ScreenArcadeStart: I/O board not found. Continuing anyway..." );
 		return true;
 	}
-#endif
 
 	/* Attempt a connection */
 	if( !pDriver->Open() )

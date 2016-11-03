@@ -107,24 +107,6 @@ struct stat st;
 		Root = InitialWorkingDirectory;
 */
 
-#ifdef ITG_ARCADE
-	/* Stock ITG2 filesystem configuration has /stats and /itgdata as their own xfs partitions.
-	 * /stats is writable and /itgdata is readonly.
-	 * Because disk space is sparse in /stats, OpenITG depends on /itgdata to be writable aswell.
-	 * Primarily userpacks and cache is stored by OpenITG in /itgdata.
-	 * Some users may not have configured /itgdata as its own partition, but rather just a directory.
-	 * For them, assume its writable. */
-	if( IsReadOnlyMountPoint( "/itgdata" ) )
-		system( "mount -o remount,rw /itgdata" );
-
-	/* ITG-specific arcade paths */
-	FILEMAN->Mount( "prb", "/itgdata", "/Packages" );
-	FILEMAN->Mount( "dir", "/stats", "/Data" );
-
-	/* OpenITG-specific arcade paths */
-	FILEMAN->Mount( "dir", "/itgdata/UserPacks", "/UserPacks" );
-	FILEMAN->Mount( "dir", "/itgdata/cache-sink", "/Cache" );
-#else
 	/* OpenITG-specific paths */
 	FILEMAN->Mount( "oitg", Root + "/CryptPackages", "/Packages" );
 
@@ -138,7 +120,6 @@ struct stat st;
 
 	/* This mounts everything else, including Cache, Data, UserPacks, etc. */
 	FILEMAN->Mount( "dir", Root, "/" );
-#endif // ITG_ARCADE
 }
 
 static void GetDiskSpace( const CString &sDir, uint64_t *pSpaceFree, uint64_t *pSpaceTotal )
@@ -239,7 +220,6 @@ bool ArchHooks_Unix::GetNetworkAddress( CString &sIP, CString &sNetmask, CString
 
 void ArchHooks_Unix::SystemReboot( bool bForceSync )
 {
-#ifdef ITG_ARCADE
 	/* Important: flush to disk first */
 	if( bForceSync )
 	{
@@ -251,7 +231,6 @@ void ArchHooks_Unix::SystemReboot( bool bForceSync )
 	if( !IsAFile("/rootfs/tmp/no-crash-reboot") )
 		if( reboot(RB_AUTOBOOT) != 0 )
 			LOG->Warn( "Could not reboot: %s", strerror(errno) );
-#endif
 
 	// Should we try to develop a RestartProgram for Unix?
 	ExitGame();

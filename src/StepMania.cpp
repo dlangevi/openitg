@@ -81,11 +81,7 @@
  * to the same directory in the VFS. I just don't want to break patch data
  * for arcade cabinets without testing it first... -- vyhd */
 
-#if defined(ITG_ARCADE) && defined(LINUX)
-#define PATCH_FILE	"/rootfs/stats/patch/patch.zip"
-#else
 #define PATCH_FILE	"Data/patch/patch.zip"
-#endif
 
 /* If it exists, this dir is mounted as a patch instead of patch.zip */
 #define PATCH_DATA_DIR	"Data/patch/patch"

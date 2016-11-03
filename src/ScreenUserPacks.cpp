@@ -365,9 +365,7 @@ m_PlayerSongLoadThread.Create( InitSASSongThread, this )
 			}
 			LOG->Debug( "Transferred %s in %f seconds.", g_CurXferFile.c_str(), start.Ago() );
 		}
-#if defined(LINUX) && defined(ITG_ARCADE)
 		sync();
-#endif
 		SCREENMAN->HideOverlayMessage();
 		SCREENMAN->ZeroNextUpdate();
 		FILEMAN->FlushDirCache(USER_PACK_SAVE_PATH);

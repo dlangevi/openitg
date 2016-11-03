@@ -44,11 +44,7 @@ const CString TEMP_PATCH_DIR	= "Data/new-patch-unchecked/";
 
 /* if PC build, move to Data/patch/ on completion. They're
  * not likely to have boot scripts or modify patch data. */
-#ifndef ITG_ARCADE
 const CString FINAL_PATCH_DIR	= "Data/patch/";
-#else
-const CString FINAL_PATCH_DIR	= "Data/new-patch/";
-#endif
 
 REGISTER_SCREEN_CLASS( ScreenArcadePatch );
 
@@ -339,10 +335,6 @@ bool UpdateProgress( uint64_t iCurrent, uint64_t iTotal )
 #ifdef LINUX
 static CString GetDataMountPath()
 {
-#ifdef ITG_ARCADE
-// XXX: not currently used
-	return "/stats/";
-#endif // ITG_ARCADE
 
 	static CString sMountPath;
 
@@ -379,13 +371,7 @@ static CString GetDataMountPath()
 static CString ResolveTempFilePath( const CString &sFile )
 {
 	CString ret;
-#ifdef ITG_ARCADE
-	ret = TEMP_PATCH_DIR;
-	ret.Replace( "Data/", "/stats/" );
-	ret += sFile;
-#else
 	ret = GetDataMountPath() + "/" + TEMP_PATCH_DIR + sFile;
-#endif // ITG_ARCADE
 
 	return ret;
 }

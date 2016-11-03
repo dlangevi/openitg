@@ -67,6 +67,7 @@ RageFileObjCrypt_ITG2::RageFileObjCrypt_ITG2( const RageFileObjCrypt_ITG2 &cpy )
 bool RageFileObjCrypt_ITG2::OpenInternal( const CString &sPath, int iMode, int &iError )
 {
 
+  LOG->Trace("OpenInternal %s, %d, %d", sPath.c_str(), iMode, iError);
 	// attempt to open the basic low-level routines for this file object
 	if( !RageFileObjDirect::OpenInternal(sPath, iMode, iError) )
 		return false;

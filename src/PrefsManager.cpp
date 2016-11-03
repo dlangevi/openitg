@@ -252,7 +252,7 @@ PrefsManager::PrefsManager() :
 	m_bTrilinearFiltering			( "TrilinearFiltering",			0 ),
 	m_bAnisotropicFiltering			( "AnisotropicFiltering",		0 ),
 
-	m_bSignProfileData				( "SignProfileData",			false ),
+	m_bSignProfileData				( "SignProfileDataDefault",			false ),
 	m_bEditorShowBGChangesPlay		( "EditorShowBGChangesPlay",	false ),
 	m_CourseSortOrder				( "CourseSortOrder",			COURSE_SORT_SONGS ),
 	m_bMoveRandomToEnd				( "MoveRandomToEnd",			false ),
