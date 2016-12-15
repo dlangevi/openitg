@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ./autogen.sh
-./configure --with-x --with-gnu-ld
+./configure --with-x --with-gnu-ld --with-sse2
 make clean
 if [ "x$1" = "x" ];
 then
