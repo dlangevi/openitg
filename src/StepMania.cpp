@@ -1276,7 +1276,8 @@ CString SaveScreenshot( CString sDir, bool bSaveCompressed, bool bMakeSignature,
 	//
 	RageDisplay::GraphicsFileFormat fmt;
 	if( bSaveCompressed && MEMCARDMAN->PathIsMemCard(sDir) )
-		fmt = RageDisplay::SAVE_LOSSY_LOW_QUAL;
+		// fmt = RageDisplay::SAVE_LOSSY_LOW_QUAL;
+		fmt = RageDisplay::SAVE_LOSSY_HIGH_QUAL;
 	else if( bSaveCompressed )
 		fmt = RageDisplay::SAVE_LOSSY_HIGH_QUAL;
 	else

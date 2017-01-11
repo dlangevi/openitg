@@ -1201,41 +1201,6 @@ void Profile::LoadGeneralDataFromNode( const XNode* pNode )
 				m_sDefaultModifiers[game_type->m_sName] = game_type->m_sValue;
 			}
 			// is "Speed" the only OptionRow for scroll speeds?
-			if (! IsMachine() )
-			{
-				CHECKPOINT_M("CustomSpeedMod check 1");
-				int iSpeedLineCount = THEME->GetMetricI("ScreenOptionsMaster", "Speed");
-				for (int i = 1; i <= iSpeedLineCount; i++)
-				{
-					GameCommand gc;
-					gc.Load( 0, ParseCommands(THEME->GetMetric("ScreenOptionsMaster", ssprintf("Speed,%d",i))) );
-					sPossibleSpeedMods.push_back(gc.m_sName);
-				}
-				for (unsigned i = 0; i < m_sPlayerAdditionalModifiers.size(); i++)
-				{
-					sPossibleSpeedMods.push_back(m_sPlayerAdditionalModifiers[i]);
-				}
-				CHECKPOINT_M("CustomSpeedMod check 2");
-				for (unsigned i = 0; i < sPossibleSpeedMods.size(); i++)
-				{
-					LOG->Trace("sPossibleSpeedMods[%d]: %s", i, sPossibleSpeedMods[i].c_str());
-				}
-				CHECKPOINT_M("CustomSpeedMod check 3");
-				split(m_sDefaultModifiers[GAMESTATE->GetCurrentGame()->m_szName], ", ", sDefaultMods);
-				sDefaultMods[0].MakeLower();
-				bool found = false;
-				for (unsigned i = 0; i < sPossibleSpeedMods.size(); i++)
-				{
-					sPossibleSpeedMods[i].MakeLower();
-					if (sDefaultMods[0] == sPossibleSpeedMods[i]) found = true;
-				}
-				if (!found)
-				{
-					LOG->Warn("Speed mod %s does not exist in the list of possible speed mods, using default...", sDefaultMods[0].c_str());
-					m_sDefaultModifiers[GAMESTATE->GetCurrentGame()->m_szName] = PREFSMAN->m_sDefaultModifiers.ToString();
-				}
-				CHECKPOINT_M("CustomSpeedMod check final");
-			}
 		}
 	}
 
